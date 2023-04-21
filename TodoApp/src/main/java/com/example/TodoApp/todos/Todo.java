@@ -5,7 +5,10 @@ import java.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,17 +28,22 @@ public class Todo {
 		this.date = date;
 		this.done = done;
 	}
-	
-    public static final String SEQUENCE_NAME="Todo-Seq"; // to auto increment documents we need to define this documents specific sequence
-
 	@Id
 	String id;
+	
     @NotNull()
-
+    @NotBlank(message="Name Should Not Be Empty")
+    @Size(min=3,message="Name Should Have At Least 3 Characters")
 	String name;
+    
     @NotNull()
+    @NotBlank(message="Desc Should Not Be Empty")
+    @Size(min = 5,message="Desc Should Have At Least 5 Characters")
 	String desc;
+    
+    @Past
 	LocalDate date;
+    
 	Boolean done;
 	
 	public String getId() {

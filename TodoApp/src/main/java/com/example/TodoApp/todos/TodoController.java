@@ -1,5 +1,6 @@
 package com.example.TodoApp.todos;
 import java.util.List;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -7,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.validation.Valid;
 
 @RestController
 public class TodoController {
@@ -18,7 +21,7 @@ public class TodoController {
 	}
 	// create
 	@PostMapping("/create")
-	public Todo createTask(@RequestBody Todo todo)
+	public Todo createTask(@Valid @RequestBody Todo todo)
 	{
 		return service.addTask(todo);
 	}
@@ -30,12 +33,12 @@ public class TodoController {
 	}
 	// delete a particular task
 	@DeleteMapping("/delete/{id}")
-	public void deleteTask(@PathVariable String id)
+	public Todo deleteTask(@PathVariable String id) throws UserFindException
 	{
-		 service.deleteTask(id);
+		 return service.deleteTask(id);
 	}
 	@PutMapping("/update/{id}")
-	public Todo updateTask(@RequestBody Todo todo,@PathVariable String id)
+	public Todo updateTask(@Valid @RequestBody Todo todo,@PathVariable String id) throws UserFindException
 	{
 		return service.updateTask(todo,id);
 	}

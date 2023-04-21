@@ -29,8 +29,13 @@ public class TodoService {
 	}
 	
 	// update the task
-	public Todo updateTask(Todo todo,String id)
+	public Todo updateTask(Todo todo,String id) throws UserFindException
 	{
+		String getid=todo.getId(); // task id and params id 
+		if(!getid.equals(id))
+		{
+			throw new UserFindException("NotFound");
+		}
 		Todo ExistTask =repos.findById(id).get();
 		ExistTask.setDesc(todo.getDesc());
 		ExistTask.setName(todo.getName());
@@ -41,9 +46,16 @@ public class TodoService {
 	}
 	
 	// delete
-	public void deleteTask(String id)
+	public Todo deleteTask(String id) throws UserFindException
 	{
+		Todo userfind=repos.findById(id).get();
+		System.out.println(userfind);	
+		if(userfind==null)
+		{
+			throw new UserFindException("notfound");
+		}
 		repos.deleteById(id);
+		return userfind;
 	}
 	
 }
