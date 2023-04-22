@@ -1,0 +1,3 @@
+Things to do
+1.DatePicker format yyyy-mm-dd
+2.Selecting true or false in createtodo and edit js and send it as a boolean value
