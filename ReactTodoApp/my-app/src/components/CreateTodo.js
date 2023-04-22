@@ -31,7 +31,7 @@ const sendRequest = async () =>
       name: input.name,
       desc: input.desc,
       Aim:input.Aim,
-      done: input.done,
+      done: input.done==="true"?true:false,
       date:startDate
     })
     .catch((err) => console.log(err));
@@ -68,10 +68,12 @@ const sendRequest = async () =>
       </div>
       <div className='form-group'>
         <label>Done</label>
-        <input autoComplete='off' name="done" onChange={handleChange} value={input.done} className='form-control' type="text" placeholder="True Or False" ></input>
-        {/* <h1>{input.done}</h1>
+        {/* <input autoComplete='off' name="done" onChange={handleChange} value={input.done} className='form-control' type="text" placeholder="True Or False" ></input> */}
+        <h1>{input.done}</h1>
         <select value ={input.done} onChange={e=>setInput(e.target.value)}>
-        </select> */}
+          <option>true</option>
+          <option>false</option>
+        </select>
        </div>
       <div className='form-group'>
           <label>Date</label>
