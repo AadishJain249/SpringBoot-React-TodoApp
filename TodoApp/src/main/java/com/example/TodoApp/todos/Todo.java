@@ -1,9 +1,14 @@
 package com.example.TodoApp.todos;
 
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,35 +22,58 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @AllArgsConstructor
-public class Todo {
+public class Todo implements Serializable{
 	
 	
-	public Todo(String id, String name, String desc, LocalDate date, Boolean done) {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public Todo(String id, String name, String desc,String Aim, Boolean done,String date) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.desc = desc;
-		this.date = date;
+		this.Aim=Aim;
 		this.done = done;
+		this.date=date;
 	}
 	@Id
+//	@JsonProperty("id")
 	String id;
 	
     @NotNull()
     @NotBlank(message="Name Should Not Be Empty")
     @Size(min=3,message="Name Should Have At Least 3 Characters")
+//	@JsonProperty("name")
 	String name;
     
     @NotNull()
     @NotBlank(message="Desc Should Not Be Empty")
     @Size(min = 5,message="Desc Should Have At Least 5 Characters")
+//	@JsonProperty("desc")
 	String desc;
     
-    @Past
-	LocalDate date;
+    @NotNull()
+    @NotBlank(message="Aim Should Not Be Empty")
+    @Size(min = 5,message="Aim Should Have At Least 5 Characters")
+//    @JsonProperty("Aim")
+	String Aim;
     
+//    @JsonProperty("done")
 	Boolean done;
 	
+    @JsonFormat(pattern="yyyy-MM-dd",shape=Shape.STRING)
+	String date;
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -58,8 +86,8 @@ public class Todo {
 		return desc;
 	}
 
-	public LocalDate getDate() {
-		return date;
+	public String getAim() {
+		return Aim;
 	}
 
 	public Boolean isDone() {
@@ -78,8 +106,8 @@ public class Todo {
 		this.desc = desc;
 	}
 
-	public void setDate(LocalDate date) {
-		this.date = date;
+	public void setAim(String Aim) {
+		this.Aim = Aim;
 	}
 
 	public void setDone(boolean done) {
@@ -88,9 +116,9 @@ public class Todo {
 
 	@Override
 	public String toString() {
-		System.out.println();
-		return "TodoController [id=" + id + ", name=" + name + ", desc=" + desc + ", date=" + date + ", done=" + done
-				+ "]";
+		return "Todo [id=" + id + ", name=" + name + ", desc=" + desc + ", Aim=" + Aim + ", done=" + done + ", date="
+				+ date + "]";
 	}
-
+	
+	
 }

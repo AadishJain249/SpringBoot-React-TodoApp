@@ -1,5 +1,6 @@
 package com.example.TodoApp.todos;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
@@ -31,16 +32,12 @@ public class TodoService {
 	// update the task
 	public Todo updateTask(Todo todo,String id) throws UserFindException
 	{
-		String getid=todo.getId(); // task id and params id 
-		if(!getid.equals(id))
-		{
-			throw new UserFindException("NotFound");
-		}
 		Todo ExistTask =repos.findById(id).get();
 		ExistTask.setDesc(todo.getDesc());
 		ExistTask.setName(todo.getName());
-		ExistTask.setDate(todo.getDate());
+		ExistTask.setAim(todo.getAim());
 		ExistTask.setDone(todo.isDone());
+		ExistTask.setDate(todo.getDate());
 		repos.save(ExistTask);
 		return ExistTask;
 	}
@@ -56,6 +53,12 @@ public class TodoService {
 		}
 		repos.deleteById(id);
 		return userfind;
+	}
+
+	public Todo getTakById(Todo todo, String id) 
+	{
+        Optional<Todo> book = repos.findById(id);
+        return book.get();
 	}
 	
 }
